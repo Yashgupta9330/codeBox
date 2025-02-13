@@ -3,6 +3,7 @@ import CodeLayout from './components/CodeLayout';
 import Home from './pages/Home';
 import Interview from './pages/Interview/Interview';
 import ProblemLists from "./pages/ProblemLists";
+import Login from "./pages/login";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/problems" element={<ProblemLists />} />
         <Route path="/code/:id" element={<CodeLayout />} />
         <Route path="/interview/:id" element={<Interview />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </main>
   );
