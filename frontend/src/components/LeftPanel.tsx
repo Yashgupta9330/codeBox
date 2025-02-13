@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useTabs } from "@/context/tabs-context";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./Tabs/Tabs";
 import { cn } from "@/lib/utils";
@@ -6,7 +8,9 @@ import ProfileAvatar from "./ui/ProfileAvatar";
 import { SettingsMenu } from "./ui/SettingsMenu";
 
 export default function LeftPanel() {
-  const { visibleTabs, removeTab, activateTab, hideTab } = useTabs();
+  const { visibleTabs, activateTab, hideTab } = useTabs();
+  const { slug } = useParams<{ slug: string }>();
+
   return (
     <div className="flex w-full h-full min-h-screen bg-white border dark:bg-neutral-900 rounded-lg shadow">
       <Tabs

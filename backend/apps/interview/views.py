@@ -63,3 +63,15 @@ class CodeErrorView(APIView):
             response = execute_ai_tool('error_assistance', code, error)
             return Response(response, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class GetInterviewProblem(APIView):
+    def post(self, request):
+        id = request.data.get('id')
+        interview = InterviewSession.objects.get(id=id)
+
+        if not interview:
+            return Response({"error": "No interview session found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        question = interview.question
+        serializer = QuestionSerializer(question)
+        return Response(serializer.data, status=status.HTTP_200_OK)

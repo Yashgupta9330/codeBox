@@ -4,19 +4,21 @@ import Home from './pages/Home';
 import Interview from './pages/Interview/Interview';
 import ProblemLists from "./pages/ProblemLists";
 import Login from "./pages/login";
-
+import { StrictModeProvider } from '@/context/StrictModeContext';
 
 function App() {
   return (
-    <main className="w-full h-full min-h-screen flex flex-col items-center justify-center">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/problems" element={<ProblemLists />} />
-        <Route path="/code/:id" element={<CodeLayout />} />
-        <Route path="/interview/:id" element={<Interview />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </main>
+    <StrictModeProvider>
+      <main className="w-full h-full min-h-screen flex flex-col items-center justify-center">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/problems" element={<ProblemLists />} />
+          <Route path="/code/:slug" element={<CodeLayout />} />
+          <Route path="/interview/:id" element={<Interview />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </main>
+    </StrictModeProvider>
   );
 }
 

@@ -61,3 +61,33 @@ class ProblemListView(generics.ListAPIView):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+class ProblemBySlugView(generics.GenericAPIView):
+    """
+    API view to retrieve a Problem by slug from query parameter.
+    """
+    serializer_class = ProblemSerializer
+
+    def get(self, request):
+        try:
+            slug = request.query_params.get('slug')
+            if not slug:
+                return Response(
+                    {"error": "Problem slug is required"}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            problem = Problem.objects.get(slug=slug)
+            serializer = self.get_serializer(problem)
+            return Response(serializer.data)
+
+        except Problem.DoesNotExist:
+            return Response(
+                {"error": f"Problem with slug {slug} not found"}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

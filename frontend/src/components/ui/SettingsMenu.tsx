@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,15 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Settings } from "lucide-react"
+import { useStrictMode } from '@/context/StrictModeContext'
 
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 export function SettingsMenu() {
-  const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true)
-  const handleStrictMode = () => {
-    setShowStatusBar((prev) => !prev)
-    localStorage.setItem("strictMode", JSON.stringify(!showStatusBar))
-  }
+  const { strictMode, toggleStrictMode } = useStrictMode();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,8 +30,8 @@ export function SettingsMenu() {
         <DropdownMenuLabel>Settings</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
-          checked={showStatusBar}
-          onCheckedChange={handleStrictMode}
+          checked={strictMode}
+          onCheckedChange={toggleStrictMode}
         >
           Strict Mode
         </DropdownMenuCheckboxItem>

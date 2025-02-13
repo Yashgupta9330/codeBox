@@ -2,13 +2,14 @@ import ModeToggle from "@/components/ModeToggle";
 import { Problem, ProblemTable } from "./ProblemTable";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "@/lib/credentials";  
 
 export default function ProblemLists() {
     const [problems, setProblems] = useState<Problem[]>([]);
     useEffect(() => {
         const fetchProblems = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/list/');
+                const response = await axios.get(`${API_URL}/list/`);
                 console.log(response.data);
                 setProblems(response.data);
             } catch (error) {

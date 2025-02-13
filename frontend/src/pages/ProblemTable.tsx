@@ -102,7 +102,7 @@ export function ProblemTable({ problems, isLoading }: ProblemTableProps) {
               <TableCell className="font-medium text-foreground/80 group-hover:text-primary">
                 {problem.title}
               </TableCell>
-              <TableCell className='flex items-center justify-start mt-2'>
+            <TableCell className='flex items-center justify-start mt-2'>
                 <DifficultyBadge difficulty={problem.difficulty} />
               </TableCell>
               <TableCell>
@@ -111,7 +111,7 @@ export function ProblemTable({ problems, isLoading }: ProblemTableProps) {
                 </Button>
               </TableCell>
               <TableCell>
-                <a href={`/code/${problem.id}`} target="_blank" rel="noreferrer">
+                <a href={`/code/${problem.slug}`} target="_blank" rel="noreferrer">
                     <Button variant={'ghost'} className="text-primary">
                         Solve
                     </Button>

@@ -7,16 +7,16 @@ import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 export default function Markdown({ children }: { children: React.ReactNode }) {
     const { state } = useEditorMode();
-    const Pre = ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => <pre className="blog-pre" {...props}>
-        <CodeCopyBtn>{children}</CodeCopyBtn>
-        {children}
-    </pre>
+    // const Pre = ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => <pre className="blog-pre" {...props}>
+    //     <CodeCopyBtn>{children}</CodeCopyBtn>
+    //     {children}
+    // </pre>
     return (
         <MarkdownPreview
             source={children as string}
-            components={{
-                pre: Pre,
-            }}
+            // components={{
+            //     pre: Pre,
+            // }}
             rehypePlugins={[
                 [
                     rehypeSanitize,
