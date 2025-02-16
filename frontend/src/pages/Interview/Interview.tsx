@@ -3,6 +3,7 @@ import { initialTabs } from "@/components/Tabs/constants"
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { TabsProvider } from "@/context/tabs-context"
 import { useParams } from "react-router-dom"
+import ChatPanel from "./ChatPanel"
 import RightPanel from "./RightPanel"
 
 export default function Interview() {
@@ -17,7 +18,8 @@ export default function Interview() {
           </ResizablePanel>
           <ResizableHandle withHandle className="bg-background px-[1px] mx-[2px] hover:bg-blue-700 transition-colors" />
           <ResizablePanel minSize={20} defaultSize={50} className="rounded-lg">
-            <RightPanel interview_id={id as string} />
+          {/* <ChatPanel interview_id={id as string} /> */}
+          <RightPanel />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

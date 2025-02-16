@@ -1,23 +1,17 @@
 import { motion } from 'framer-motion';
 import { Code2, FileQuestion, Cpu, Focus, Bot, ArrowRight } from 'lucide-react';
 import { content } from '../lib/content';
-import ModeToggle from '@/components/ModeToggle';
 import { Link } from 'react-router-dom';
-
+import { MenuBar } from '@/components/menu-bar';
 
 function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-primary/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-accent/5 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
+      <div className='w-full flex justify-center items-center p-4 '>
+        <MenuBar />
       </div>
-      
-      <ModeToggle />
-      
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-32 max-w-5xl">
+      <section className="container mx-auto px-4 pt-8 pb-32 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

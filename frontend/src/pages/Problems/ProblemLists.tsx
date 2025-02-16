@@ -3,6 +3,7 @@ import { Problem, ProblemTable } from "./ProblemTable";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "@/lib/credentials";  
+import { MenuBar } from "@/components/menu-bar";
 
 export default function ProblemLists() {
     const [problems, setProblems] = useState<Problem[]>([]);
@@ -20,6 +21,9 @@ export default function ProblemLists() {
     }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-accent/20">
+      <div className='w-full flex justify-center items-center p-4 '>
+          <MenuBar />
+        </div>
       <div className="mx-auto max-w-7xl px-4 py-8">
         <div className="mb-8 flex items-center justify-between">
             <h1 className="text-4xl font-bold tracking-tight text-primary">

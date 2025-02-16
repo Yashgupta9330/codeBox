@@ -77,3 +77,8 @@
   transform: scale(1.1);
   opacity: 0.9;
 }
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

@@ -1,6 +1,6 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
 import LeftPanel from './LeftPanel';
-import RightPanel from './RightPanel';
+import RightPanel from './CodePanel';
 import { TabsProvider } from '@/context/tabs-context';
 import { initialTabs } from './Tabs/constants';
 import { useParams } from 'react-router-dom';

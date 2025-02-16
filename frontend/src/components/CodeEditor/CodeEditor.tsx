@@ -1,5 +1,5 @@
 import CodeToolbar from "./CodeToolbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LANGUAGES } from "@/lib/constants";
 import Editor from '@monaco-editor/react';
 import { useEditorMode } from "@/context/editor-mode-context";
@@ -12,6 +12,13 @@ export default function CodeEditor() {
   const [currentLanguage, setCurrentLanguage] = useState<currentLanguageType>(LANGUAGES[0]);
   const { state } = useEditorMode();
   const [code, setCode] = useState<string>(LANGUAGES[0].defaultCode);
+  const editorRef = useRef<any>(null);
+ 
+
+  const handleEditorDidMount = (editor: any, monaco: any) => {
+    editorRef.current = editor;
+  }
+
 
   useEffect(() => {
     setCode(currentLanguage.defaultCode);
@@ -23,6 +30,7 @@ export default function CodeEditor() {
       <CodeToolbar
         currentLanguage={currentLanguage}
         setCurrentLanguage={setCurrentLanguage}
+        editorRef={editorRef}
       />
 
       <Editor
@@ -39,6 +47,7 @@ export default function CodeEditor() {
           minimap: { enabled: false },
           wordWrap: 'on',
         }}
+        onMount={handleEditorDidMount}
       />
     </div>
   );
