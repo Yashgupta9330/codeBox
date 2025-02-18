@@ -54,6 +54,7 @@ export default function Description() {
       try {
         const response = await axios.post(`${API_URL}/interview/question/`, { id });
         setProblem(response.data);
+        localStorage.setItem('problemId',response.data.id);
       } catch (error) {
         console.error(error);
       }

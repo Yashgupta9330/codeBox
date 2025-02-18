@@ -79,7 +79,7 @@ export default function RightPanel() {
             <ChatPanel interview_id={id as string} />
           </TabsContent>
           <TabsContent value="CodePanel" direction="row" className="w-full h-full">
-            <CodePanel />
+            <CodePanel  interview_id={id as string} />
           </TabsContent>
         </div>
       </Tabs>
