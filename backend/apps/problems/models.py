@@ -44,12 +44,12 @@ class Problem(models.Model):
 
 
 class TestCase(models.Model):
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE, related_name='test_cases')
-    input_data = models.TextField()
-    expected_output = models.TextField()
-    is_sample = models.BooleanField(default=False)
-    explanation = MarkdownxField(blank=True, null=True)
-    order = models.IntegerField(default=0)
+     problem = models.ForeignKey(Problem, on_delete=models.CASCADE, related_name='test_cases')
+     input_data = models.TextField()
+     expected_output = models.TextField()
+     is_sample = models.BooleanField(default=False)
+     explanation = MarkdownxField(blank=True, null=True)
+     order = models.IntegerField(default=0)
 
-    class Meta:
-        ordering = ['order']
+     class Meta:
+         ordering = ['order']

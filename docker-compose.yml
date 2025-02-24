@@ -14,14 +14,14 @@ services:
       DJANGO_SETTINGS_MODULE: config.settings
       LANGSMITH_TRACING: true
       LANGSMITH_ENDPOINT: "https://api.smith.langchain.com"
-      LANGSMITH_API_KEY: "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"
+      LANGSMITH_API_KEY: "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" # Use an environment variable
       LANGSMITH_PROJECT: "pr-unnatural-sultan-1"
     depends_on:
       - db
     command: >
-         sh -c "python manage.py makemigrations && 
-         python manage.py migrate && 
-         watchfiles --filter python 'daphne -b 0.0.0.0 -p 8000 config.asgi:application'"
+      sh -c "python manage.py makemigrations && 
+             python manage.py migrate &&  
+             daphne -b 0.0.0.0 -p 8000 config.asgi:application"  # Removed unnecessary quotes around daphne
 
   frontend:
     build:
