@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTimer } from 'react-timer-hook';
-import { Button } from '@/components/ui/button';
+import { Clock } from 'lucide-react';
 
 interface TimerProps {
   startTime: number; // in minutes
@@ -33,21 +33,23 @@ const Timer: React.FC<TimerProps> = ({ startTime, endTime }) => {
   }, [start]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <div className="text-2xl font-bold mb-4">
-        {`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
-      </div>
-      <div className="flex space-x-2">
+    <div className="flex flex-col items-center justify-center p-2 text-text rounded-lg shadow-md">
+       {/* <div className="flex space-x-1">
         <Button onClick={pause} variant="outline" disabled={!isRunning}>
-          Pause
+          <Pause size={8} />
         </Button>
         <Button onClick={resume} variant="outline" disabled={isRunning}>
-          Resume
+          <Play size={8} />
         </Button>
         <Button onClick={() => restart(endDate)} variant="outline">
-          Restart
+        <RotateCcw size={8} />
         </Button>
+      </div> */}
+      <div className="text-lg font-bold flex gap-2 items-center">
+       <Clock size={20} />
+        {`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
       </div>
+     
     </div>
   );
 };

@@ -20,13 +20,13 @@ export default function RightPanel() {
   };
 
   return (
-    <div className="flex w-full h-full min-h-screen bg-white border dark:bg-neutral-900 rounded-lg shadow">
+    <div className="flex w-full h-full bg-white border dark:bg-neutral-900 rounded-lg shadow">
       <Tabs
         value={activeTab}
         onValueChange={handleTabChange}
         className="w-full h-full rounded-lg bg-gray-100 dark:bg-neutral-800/50 justify-start items-start"
       >
-        <div className="w-full bg-gray-200 dark:bg-neutral-800/50 mt-4">
+        <div className="w-full bg-gray-200 dark:bg-neutral-800/50">
           <TabsList direction="row" className="flex bg-gray-200 dark:bg-neutral-800/50">
             <TabsTrigger
               value="ChatPanel"
@@ -74,7 +74,7 @@ export default function RightPanel() {
             </TabsTrigger>
           </TabsList>
         </div>
-        <div className="flex-1 h-[calc(100%-3.8rem)]">
+        <div className="flex-1 h-[calc(100%-3.0rem)]">
           <TabsContent value="ChatPanel" direction="row" className="w-full h-full">
             <ChatPanel interview_id={id as string} />
           </TabsContent>

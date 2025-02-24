@@ -23,7 +23,7 @@ export default function RightPanel() {
       <Tabs
         value={activeTab}
         onValueChange={handleTabChange}
-        className="w-full h-full rounded-lg bg-gray-100 dark:bg-neutral-800/50 justify-start items-start"
+        className="w-full h-full rounded-lg bg-gray-100 dark:bg-neutral-800/50 justify-start items-start relative"
       >
         <div className="w-full bg-gray-200 dark:bg-neutral-800/50 mt-4">
           <TabsList direction="row" className="flex bg-gray-200 dark:bg-neutral-800/50">
