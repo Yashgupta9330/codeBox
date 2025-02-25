@@ -318,7 +318,9 @@ class CodeExecutor:
 
                 logger.info(f"stdout: {stdout.decode()}")
                 logger.info(f"stderr: {stderr.decode()}")
-                if(stdout.decode() != expected_output):
+                output1 = stdout.decode().strip()
+                expected1 = expected_output.strip()
+                if(output1 != expected1):
                     return {
                         'test_case': test_case,
                         'output': stdout.decode(),
@@ -339,7 +341,10 @@ class CodeExecutor:
                     continue
 
                 output = stdout.decode().strip()
-                success = output.strip() == expected_output.strip()
+                expected = expected_output.strip()
+                logger.info(f"output printed {output}")
+                logger.info(f"expected printed {expected}")
+                success = output == expected
 
                 results.append({
                     'test_case': test_case,

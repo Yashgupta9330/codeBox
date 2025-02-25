@@ -29,14 +29,25 @@ class CodeSubmissionViewSet(viewsets.ModelViewSet):
 
             # Run the code executor synchronously
             result = async_to_sync(executor.execute)()
-            logger.info(f"Result generated: {result}")
-
-            # Check if all test cases succeeded
-            overall_success = all(test_case['success'] for test_case in result)
             
+            # Log the raw result for better debugging
+            logger.info(f"Raw result generated: {result}")
+
+
+            overall_success =  all(test_case['success'] for test_case in result)
+
+            # if isinstance(result, dict) and 'success' in result:
+            #     overall_success = result['success']
+            #     logger.info(f"Overall success: {overall_success}")
+            # else:
+            #     # Log an error if result does not have expected structure
+            #     logger.error(f"Unexpected result structure: {result}")
+            #     raise ValueError("Invalid result structure returned by executor")
+
             # Update submission status based on overall success or failure
             submission.status = 'Accepted' if overall_success else 'Error'
             submission.save()
+            logger.info(f"Submission status updated: {submission.status}")
 
             # Return the result of execution
             return Response(result)
