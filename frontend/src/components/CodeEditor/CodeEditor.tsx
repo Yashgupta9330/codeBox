@@ -35,6 +35,7 @@ export default function CodeEditor() {
           localStorage.setItem(`code_${language.symbol.toLowerCase()}`, response.data.default_code_templates[`${language.symbol.toLowerCase()}`]);
         });
         setCode(response.data.default_code_templates[`${currentLanguage.symbol.toLowerCase()}`]);
+        localStorage.setItem('language', currentLanguage.symbol.toLowerCase());
         console.log(response.data);
       } catch (error) {
         console.error(error);
