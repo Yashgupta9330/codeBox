@@ -5,11 +5,13 @@ import TestCases from './Testcases/TestCases';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
 import { TestCase } from '@/pages/Interview/types';
 
+
 interface CodePanelProps {
-  interview_id: string;
+  interview_id?: string;
+  isInterview?: boolean;
 }
 
-export default function CodePanel({ interview_id }: CodePanelProps) {
+export default function CodePanel({ interview_id, isInterview=false }: CodePanelProps) {
   const [defaultTestCases, setDefaultTestCases] = useState<TestCase[]>([]); 
   const [testCases, setTestCases] = useState<TestCase[]>([]); 
   const problemId = localStorage.getItem('problemId'); 
@@ -50,7 +52,7 @@ export default function CodePanel({ interview_id }: CodePanelProps) {
     }
   };
 
-  if (!interview_id) {
+  if (!interview_id && isInterview) {
     return <div>Loading...</div>;
   }
 

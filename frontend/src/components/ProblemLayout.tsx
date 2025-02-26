@@ -81,11 +81,11 @@ export default function ProblemLayout({
   }
 
   return (
-    <Card className="bg-transparent border-none" style={{ userSelect: strictMode ? 'none' : 'auto' }}>
-      <CardHeader className="space-y-4 bg-secondary/10">
-        <div className="flex items-center justify-between">
+    <Card className="bg-transparent border-none flex flex-wrap w-full" style={{ userSelect: strictMode ? 'none' : 'auto' }}>
+      <CardHeader className="space-y-4 bg-secondary/10 w-full">
+        <div className="flex items-center justify-between w-full">
           <div className="space-y-2 w-full">
-            <h1 className="text-3xl font-bold">{title}</h1>
+            <h1 className="text-3xl font-bold text-wrap flex flex-wrap">{title}</h1>
             <div className='w-full flex items-center gap-2 justify-between'>
               { !strictMode &&(
                 <div className="flex items-center gap-2">
@@ -118,7 +118,7 @@ export default function ProblemLayout({
 
       </CardHeader>
 
-      <CardContent className="space-y-6 pt-6">
+      <CardContent className="space-y-6 pt-6 mb-10">
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-primary">Description</h2>
           <div className="prose dark:prose-invert max-w-none">
@@ -138,19 +138,13 @@ export default function ProblemLayout({
             <div className="prose dark:prose-invert max-w-none bg-accent/10 p-4 rounded-md mt-2">
               {
                 hints.map((hint, index) => {
-                  const heading = `## Hint ${index + 1}`
                   const content = hint
                   return (
-                    <>
-                      <span>
-                        {heading}
-                      </span>
-                      <span>
+                      <span key={index}>
                         {content}
                       </span>
-                    </>
                   )
-                }).join('\n')
+                })
               }
             </div>
           </CollapsibleContent>
@@ -180,13 +174,13 @@ export default function ProblemLayout({
           </CollapsibleContent>
         </Collapsible>
         }
-        <Separator className="bg-primary/30" />
-        <BottomBar
+        {/* <Separator className="bg-primary/30" /> */}
+        {/* <BottomBar
           likes={likes}
           dislikes={dislikes}
           userVote={userVote}
           onVote={handleVote}
-        />
+        /> */}
       </CardContent>
     </Card>
   )

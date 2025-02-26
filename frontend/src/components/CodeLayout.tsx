@@ -9,7 +9,7 @@ export default function LeetCodeLayout() {
   const { slug } = useParams<{ slug: string }>();
   console.log(slug);
   return (
-    <TabsProvider initialTabs={initialTabs} slug={slug}>
+    <TabsProvider initialTabs={initialTabs} >
       <div className="h-screen w-full flex flex-col inset-0">
         <ResizablePanelGroup direction="horizontal" className="flex-grow p-2">
           <ResizablePanel minSize={20} defaultSize={50}>

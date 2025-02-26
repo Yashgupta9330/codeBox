@@ -39,6 +39,7 @@ export default function Description() {
       try {
         const response = await axios.get(`${API_URL}/problem/?slug=${slug}`);
         setProblem(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoginForm } from "@/components/login-from";
 
 const GoogleAuth = () => {
   const [email, setEmail] = useState("");
@@ -25,47 +26,18 @@ const GoogleAuth = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full">
-      <Card className="w-full max-w-md p-8 shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold">Sign In</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <Input
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
-              placeholder="Enter your email"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <Input
-              type="password"
-              id="password"
-              value={password}
-              onChange={handlePasswordChange}
-              placeholder="Enter your password"
-            />
-          </div>
-          <Button onClick={handleSignIn} className="w-full bg-blue-500 hover:bg-blue-600 text-white">
-            Sign In
-          </Button>
-          <div className="relative flex justify-center text-sm text-gray-500">
-            <span className="bg-white px-2">or</span>
-          </div>
-          <Button onClick={loginWithGoogle} className="w-full bg-red-500 hover:bg-red-600 text-white">
-            Login with Google
-          </Button>
-        </CardContent>
-      </Card>
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 dark">
+      <div className="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+      <div className="w-full max-w-sm">
+        <LoginForm
+          email={email} 
+          password={password}
+          handleEmailChange={handleEmailChange}
+          handlePasswordChange={handlePasswordChange}
+          handleSignIn={handleSignIn}
+          loginWithGoogle={loginWithGoogle}     
+        />
+      </div>
     </div>
   );
 };

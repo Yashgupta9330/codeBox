@@ -42,7 +42,7 @@ export default function RightPanel() {
         </div>
         <div className="flex-1 h-[calc(100%-3.8rem)]">
           <TabsContent value="CodePanel" direction="row" className="w-full h-full">
-            <CodePanel  interview_id={id}/>
+            <CodePanel/>
           </TabsContent>
         </div>
       </Tabs>
