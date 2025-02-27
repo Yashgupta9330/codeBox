@@ -7,10 +7,12 @@ export default function TestCases({
   className,
   defaultTestCases = [], // Provide a default value if not passed
   onRun,
+  submitState,
 }: {
   className?: string;
   defaultTestCases: TestCase[];
   onRun: (testCases: TestCase[]) => void;
+  submitState: "initial" | "loading" | "success";
 }) {
   const [testCases, setTestCases] = useState<TestCase[]>(defaultTestCases);
   const [submittedCases, setSubmittedCases] = useState<TestCase[]>();
@@ -48,7 +50,7 @@ export default function TestCases({
           />
         </div>
       </div>
-      <ActionButtons className="absolute bottom-0 right-0" onRun={handleSubmit} />
+      <ActionButtons submitState={submitState} className="absolute bottom-0 right-0" onRun={handleSubmit} />
     </div>
   );
 }

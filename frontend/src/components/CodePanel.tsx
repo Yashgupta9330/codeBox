@@ -4,6 +4,7 @@ import CodeEditor from './CodeEditor/CodeEditor';
 import TestCases from './Testcases/TestCases';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
 import { TestCase } from '@/pages/Interview/types';
+import { set } from 'date-fns';
 
 
 interface CodePanelProps {
@@ -15,6 +16,7 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
   const [defaultTestCases, setDefaultTestCases] = useState<TestCase[]>([]); 
   const [testCases, setTestCases] = useState<TestCase[]>([]); 
   const problemId = localStorage.getItem('problemId'); 
+  const [submitState, setSubmitState] = useState<"initial" | "loading" | "success">("initial");
 
   useEffect(() => {
 
@@ -36,6 +38,7 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
 
   const onRun = async () => {
     try {
+      setSubmitState("loading");
       const code = localStorage.getItem('code');
       const language = localStorage.getItem('language');
       console.log("testCases",testCases)
@@ -45,9 +48,11 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
         test_cases: testCases, 
         language
       });
+      setSubmitState("success");
       return response.data;
     } catch (error) {
       console.error('Error submitting code:', error);
+      setSubmitState("initial");
       throw error;
     }
   };
@@ -66,6 +71,7 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
         <TestCases 
           defaultTestCases={defaultTestCases}  
           onRun={onRun} 
+          submitState={submitState}
         />
       </ResizablePanel>
     </ResizablePanelGroup>
