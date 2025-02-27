@@ -1,4 +1,3 @@
-import ModeToggle from "@/components/ModeToggle";
 import { Problem, ProblemTable } from "./ProblemTable";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -29,7 +28,6 @@ export default function ProblemLists() {
             <h1 className="text-4xl font-bold tracking-tight text-primary">
                 Problem Lists
             </h1>
-          <ModeToggle />
         </div>
         <ProblemTable problems={problems} />
       </div>

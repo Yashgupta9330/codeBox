@@ -11,21 +11,21 @@ import { API_URL } from '@/lib/credentials';
 export type Difficulty = 'E' | 'M' | 'H';
 
 export interface Problem {
-    id: string;
-    serialNumber: number;
-    title: string;
-    difficulty: Difficulty;
-    slug: string;
-  }
-  
-  export interface ProblemTableProps {
-    problems: Problem[];
-    isLoading?: boolean;
-  }
-  
-  export interface DifficultyBadgeProps {
-    difficulty: Difficulty;
-  }
+  id: string;
+  serialNumber: number;
+  title: string;
+  difficulty: Difficulty;
+  slug: string;
+}
+
+export interface ProblemTableProps {
+  problems: Problem[];
+  isLoading?: boolean;
+}
+
+export interface DifficultyBadgeProps {
+  difficulty: Difficulty;
+}
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -42,33 +42,32 @@ const item = {
 };
 
 export function ProblemTable({ problems, isLoading }: ProblemTableProps) {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleNavigation = ({pid}: {pid: string}) => {
-        setLoading(true);
-        const createInterview = async () => {
-            try {
-                const response = await axios.post(`${API_URL}/code/start/`, {
-                    id: 1,
-                    question_id: pid
-                })
-                console.log(response.data);
-                
-                setTimeout(() => {
-                    setLoading(false);
-                }, 2000);
-                navigate(`/interview/${response.data.interview_id}`);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        createInterview();
+  const handleNavigation = ({ pid }: { pid: string }) => {
+    setLoading(true);
+    const createInterview = async () => {
+      try {
+        const response = await axios.post(`${API_URL}/code/start/`, {
+          id: 1,
+          question_id: pid
+        })
+        console.log(response.data);
+
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+        navigate(`/interview/${response.data.interview_id}`);
+      } catch (error) {
+        console.error(error);
+      }
     }
+    createInterview();
+  }
 
-
-  if (isLoading) {
+  if (isLoading || problems.length === 0) {
     return <LoadingSkeleton />;
   }
 
@@ -102,19 +101,19 @@ export function ProblemTable({ problems, isLoading }: ProblemTableProps) {
               <TableCell className="font-medium text-foreground/80 group-hover:text-primary">
                 {problem.title}
               </TableCell>
-            <TableCell className='flex items-center justify-start mt-2'>
+              <TableCell className='flex items-center justify-start mt-2'>
                 <DifficultyBadge difficulty={problem.difficulty} />
               </TableCell>
               <TableCell>
-                <Button onClick={()=>handleNavigation({ pid: problem.id })} variant={'ghost'} className="text-primary">
-                    {loading ? 'Loading...' : 'Practice Interview'}
+                <Button onClick={() => handleNavigation({ pid: problem.id })} variant={'ghost'} className="text-primary">
+                  {loading ? 'Loading...' : 'Practice Interview'}
                 </Button>
               </TableCell>
               <TableCell>
                 <a href={`/code/${problem.slug}`} target="_blank" rel="noreferrer">
-                    <Button variant={'ghost'} className="text-primary">
-                        Solve
-                    </Button>
+                  <Button variant={'ghost'} className="text-primary">
+                    Solve
+                  </Button>
                 </a>
               </TableCell>
             </motion.tr>

@@ -4,7 +4,6 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { TabsProvider } from "@/context/tabs-context"
 import { useParams } from "react-router-dom"
 import RightPanel from "./RightPanel"
-import Timer from "@/components/Timer"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
@@ -34,8 +33,6 @@ export default function Interview() {
   return (
     <TabsProvider initialTabs={initialTabs}>
       <div className="h-screen w-full flex flex-col inset-0">
-        {/* Pass the calculated remaining time */}
-        <Timer remainingTime={remainingTime} />
         <ResizablePanelGroup direction="horizontal" className="flex-grow p-2">
           <ResizablePanel minSize={20} defaultSize={50} className="rounded-lg">
             <LeftPanel />
@@ -43,7 +40,7 @@ export default function Interview() {
           <ResizableHandle withHandle className="bg-background px-[1px] mx-[2px] hover:bg-blue-700 transition-colors" />
           <ResizablePanel minSize={20} defaultSize={50} className="rounded-lg h-full relative">
             {/* <ChatPanel interview_id={id as string} /> */}
-            <RightPanel />
+            <RightPanel remainingTime={remainingTime} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import * as monaco from 'monaco-editor';
 import Editor from '@monaco-editor/react';
 import { useEditorMode } from "@/context/editor-mode-context";
 import CodeToolbar from "./CodeToolbar";
@@ -110,11 +111,7 @@ export default function CodeEditor() {
         width="100%"
         theme={state.codeTheme}
         className="insert-0"
-        options={{
-          cursorStyle: "line",
-          minimap: { enabled: false },
-          wordWrap: 'on',
-        }}
+        options={{ ...state.editorOptions, lineNumbers: state.editorOptions.lineNumbers as monaco.editor.LineNumbersType }}
         onMount={handleEditorDidMount}
       />
     </div>

@@ -94,8 +94,8 @@ export default function ChatPanel({interview_id}: {interview_id: string}) {
         }
       };
   return (
-      <ScrollArea className="relative flex flex-col w-full h-full bg-white dark:bg-neutral-900 rounded-lg shadow">
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar pt-8">
+      <ScrollArea className="relative flex flex-col justify-between w-full h-full bg-white dark:bg-neutral-900 rounded-lg shadow">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar pt-8 pb-10 ">
               {messages.map(message => (
                   <MessageBubble
                       key={message.id}
@@ -119,7 +119,7 @@ export default function ChatPanel({interview_id}: {interview_id: string}) {
               )}
               <div ref={chatEndRef} />
           </div>
-          <div className="mt-4 bottom-0 absolute w-full">
+          <div className=" w-full">
               <ChatInput onSendMessage={handleMessageInput} isLoading={isLoading} />
           </div>
       </ScrollArea>

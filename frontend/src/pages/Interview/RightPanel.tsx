@@ -7,8 +7,9 @@ import ChatPanel from "./ChatPanel";
 import { MessageCircle, Code2 } from 'lucide-react';
 import CodePanel from "@/components/CodePanel";
 import { motion } from "framer-motion";
+import Timer from "@/components/Timer"
 
-export default function RightPanel() {
+export default function RightPanel({ remainingTime }: { remainingTime: number }) {
   const { activateTab, hideTab } = useTabs();
   const { id } = useParams<{ id: string }>();
 
@@ -26,7 +27,7 @@ export default function RightPanel() {
         onValueChange={handleTabChange}
         className="w-full h-full rounded-lg bg-gray-100 dark:bg-neutral-800/50 justify-start items-start"
       >
-        <div className="w-full bg-gray-200 dark:bg-neutral-800/50">
+        <div className="w-full bg-gray-200 dark:bg-neutral-800/50 flex items-center justify-between">
           <TabsList direction="row" className="flex bg-gray-200 dark:bg-neutral-800/50">
             <TabsTrigger
               value="ChatPanel"
@@ -73,6 +74,7 @@ export default function RightPanel() {
               }
             </TabsTrigger>
           </TabsList>
+          <Timer remainingTime={remainingTime} />
         </div>
         <div className="flex-1 h-[calc(100%-3.0rem)]">
           <TabsContent value="ChatPanel" direction="row" className="w-full h-full">
