@@ -300,6 +300,18 @@ class CodeExecutor:
                         process.communicate(input=input_data.encode() if input_data else None),
                         timeout=self.timeout
                     )
+
+                    if stderr.decode():
+                        logger.warning(f"stderr: {stderr.decode()}")
+                        results.append({
+                            'test_case': test_case,
+                            'output': stdout.decode(),
+                            'success': False,
+                            'error': True,
+                            'expected': expected_output,
+                            "stderr": stderr.decode()
+                        })
+                        return results
                 except asyncio.TimeoutError:
                     # Try to kill the process if it times out
                     try:
@@ -321,13 +333,15 @@ class CodeExecutor:
                 output1 = stdout.decode().strip()
                 expected1 = expected_output.strip()
                 if(output1 != expected1):
-                    return {
+                    results.append({
                         'test_case': test_case,
                         'output': stdout.decode(),
                         'success': False,
                         'error': False,
-                        'expected': expected_output
-                    }
+                        'expected': expected_output,
+                        "stderr": stderr.decode()
+                    })
+                    return results
                 # Check for container errors
                 if process.returncode != 0 or "No such container" in stderr.decode():
                     results.append({

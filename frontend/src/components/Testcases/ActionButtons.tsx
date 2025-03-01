@@ -3,7 +3,7 @@ import Results from '../Tabs/Results';
 import { FlaskConical } from 'lucide-react';
 import PerformAction from './PerformAction';
 
-export default function ActionButtons({className, onRun, submitState}: {className?: string, onRun: () => void, submitState: "initial" | "loading" | "success"}) {
+export default function ActionButtons({className, onRun, submitState, setSubmitState}: {className?: string, onRun: () => void, submitState: "initial" | "loading" | "success", setSubmitState: React.Dispatch<React.SetStateAction<"initial" | "loading" | "success">>}) {
   const { state, addTab } = useTabs()
 
 
@@ -25,7 +25,7 @@ export default function ActionButtons({className, onRun, submitState}: {classNam
 
   return (
     <div className={"flex justify-center gap-2 py-4 pr-8" + (className ? ` ${className}` : "")}>
-      <PerformAction state={submitState} onRun={onRun} onSubmit={handleSubmit} />
+      <PerformAction state={submitState} onRun={onRun} onSubmit={handleSubmit} setState={setSubmitState} />
     </div>
   );
 }

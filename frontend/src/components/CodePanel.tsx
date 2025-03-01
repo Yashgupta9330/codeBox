@@ -4,7 +4,6 @@ import CodeEditor from './CodeEditor/CodeEditor';
 import TestCases from './Testcases/TestCases';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
 import { TestCase } from '@/pages/Interview/types';
-import { set } from 'date-fns';
 
 
 interface CodePanelProps {
@@ -19,7 +18,7 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
   const [submitState, setSubmitState] = useState<"initial" | "loading" | "success">("initial");
 
   useEffect(() => {
-
+    localStorage.setItem('showCode', 'true');
     const fetchTestCases = async () => {
       try {
         const sampleResponse = await axios.get(`http://localhost:8000/api/testcases/${problemId}/`);
@@ -39,14 +38,15 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
   const onRun = async () => {
     try {
       setSubmitState("loading");
-      const code = localStorage.getItem('code');
       const language = localStorage.getItem('language');
+      const code = localStorage.getItem(`code_${language}`);
       console.log("testCases",testCases)
       console.log("language",language)
+      console.log("code",code)
       const response = await axios.post(`http://localhost:8000/api/submissions/submit/`, {
         code,
         test_cases: testCases, 
-        language
+        language: language?.toUpperCase()
       });
       setSubmitState("success");
       return response.data;
@@ -72,6 +72,7 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
           defaultTestCases={defaultTestCases}  
           onRun={onRun} 
           submitState={submitState}
+          setSubmitState={setSubmitState}
         />
       </ResizablePanel>
     </ResizablePanelGroup>

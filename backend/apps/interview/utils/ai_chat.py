@@ -17,7 +17,9 @@ def generate_ai_message(
     question_description=None, 
     chat_history=None, 
     ai_notes=None, 
-    is_initial=False
+    is_initial=False,
+    remainingTime=None,
+    code=None
 ):
     if is_initial:
         formatted_dsa_prompt = dsa_prompt.format(
@@ -27,7 +29,10 @@ def generate_ai_message(
         formatted_base_prompt = base_interviewer
         final_prompt = formatted_base_prompt + "\n" + formatted_dsa_prompt + "\n" + chat_history if chat_history else ""
     else:
-        formatted_dsa_prompt = "You are continuing an interview. Refer to the conversation so far and AI notes:"
+        if code:
+            formatted_dsa_prompt = f"You are continuing an interview. Refer to the conversation so far and AI notes: current remaining time in interview is {remainingTime} the latest code is {code}"
+        else:
+            formatted_dsa_prompt = f"You are continuing an interview. Refer to the conversation so far and AI notes: current remaining time in interview is {remainingTime}"
         final_prompt = f"{formatted_dsa_prompt}\nChat History:\n{chat_history}\nAI Notes:\n{ai_notes}"
 
     conversational_memory_length = 20 

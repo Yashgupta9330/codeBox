@@ -25,10 +25,13 @@ const Timer: React.FC<TimerProps> = ({ remainingTime }) => {
 
   return (
     <div className="flex flex-col items-center justify-start w-fit p-2 text-text rounded-lg shadow-md">
-      <div className="font-bold flex gap-2 items-center w-fit">
+      {remainingTime === 0 ? <span className='text-nowrap dark:text-green-600'>
+        Interview Ended!
+      </span> :
+        <div className="font-bold flex gap-2 items-center w-fit">
         <Clock size={16} />
         {`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
-      </div>
+      </div>}
     </div>
   );
 };

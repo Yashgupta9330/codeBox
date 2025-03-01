@@ -9,7 +9,7 @@ import CodePanel from "@/components/CodePanel";
 import { motion } from "framer-motion";
 import Timer from "@/components/Timer"
 
-export default function RightPanel({ remainingTime }: { remainingTime: number }) {
+export default function RightPanel({ remainingTime, isComplete }: { remainingTime: number, isComplete:boolean }) {
   const { activateTab, hideTab } = useTabs();
   const { id } = useParams<{ id: string }>();
 
@@ -78,7 +78,7 @@ export default function RightPanel({ remainingTime }: { remainingTime: number })
         </div>
         <div className="flex-1 h-[calc(100%-3.0rem)]">
           <TabsContent value="ChatPanel" direction="row" className="w-full h-full">
-            <ChatPanel interview_id={id as string} />
+            <ChatPanel interview_id={id as string} remainingTime={remainingTime} isComplete={isComplete} />
           </TabsContent>
           <TabsContent value="CodePanel" direction="row" className="w-full h-full">
             <CodePanel  interview_id={id as string} />

@@ -4,14 +4,15 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { TabsProvider } from "@/context/tabs-context"
 import { useParams } from "react-router-dom"
 import RightPanel from "./RightPanel"
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import axios from "axios"
 
 export default function Interview() {
   const { id } = useParams<{ id: string }>()
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
+  const [isComplete, setIsComplete] = useState<boolean>(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchInterviewDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/get-interview-details/${id}/`)
@@ -21,6 +22,7 @@ export default function Interview() {
         const elapsedTime = Math.floor((currentTime - startTime) / 1000) 
         const totalDuration = 45 * 60 
         const remaining = totalDuration - elapsedTime
+        setIsComplete(interview.is_completed);
         setRemainingTime(remaining > 0 ? remaining : 0)
       } catch (error) {
         console.error("Error fetching interview details:", error)
@@ -40,7 +42,7 @@ export default function Interview() {
           <ResizableHandle withHandle className="bg-background px-[1px] mx-[2px] hover:bg-blue-700 transition-colors" />
           <ResizablePanel minSize={20} defaultSize={50} className="rounded-lg h-full relative">
             {/* <ChatPanel interview_id={id as string} /> */}
-            <RightPanel remainingTime={remainingTime} />
+            <RightPanel remainingTime={remainingTime} isComplete={isComplete} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

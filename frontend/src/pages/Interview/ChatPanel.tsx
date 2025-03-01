@@ -3,14 +3,37 @@ import { ChatInput } from "./ChatInput";
 import { MessageBubble } from "./MessageBubble";
 import { Message } from "./types";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { useStrictMode } from "@/context/StrictModeContext";
+import axios from "axios";
 
-export default function ChatPanel({interview_id}: {interview_id: string}) {
+export default function ChatPanel({interview_id, remainingTime, isComplete}: {interview_id: string,remainingTime: number, isComplete:boolean}) {
     const [messages, setMessages] = useState<Message[]>([]);
       const [isLoading, setIsLoading] = useState(false);
       const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
       const chatEndRef = useRef<HTMLDivElement>(null);
       const synth = window.speechSynthesis;
       const ws = useRef<WebSocket | null>(null);
+      const {strictMode, toggleStrictMode} = useStrictMode();
+
+      useEffect(() => {
+        const completeInterview = async () => {
+          const response = await axios.post(`http://localhost:8000/api/code/complete/`, {
+            interview_id: interview_id});
+          console.log(response.data);
+        }
+        const generateFeedback = async () => {
+          const response = await axios.post(`http://localhost:8000/api/code/feedback/`, {
+            interview_id: interview_id});
+          console.log(response.data);
+        }
+        if (remainingTime === 0 && !isComplete) {
+          ws.current?.close();
+          toggleStrictMode();
+          completeInterview();
+          generateFeedback();
+        }
+      }, [remainingTime]);
+
     
       useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -35,7 +58,8 @@ export default function ChatPanel({interview_id}: {interview_id: string}) {
 
       useEffect(() => {
         const savedMessages = localStorage.getItem(`messages_${interview_id}`);
-        if (savedMessages) {
+        if(!isComplete){
+          if (savedMessages) {
             setMessages(JSON.parse(savedMessages));
             ws.current = new WebSocket(`ws://localhost:8000/ws/interview/${interview_id}/`);
             ws.current.onopen = () => console.log('WebSocket connection established');
@@ -52,13 +76,34 @@ export default function ChatPanel({interview_id}: {interview_id: string}) {
             return () => {
                 ws.current?.close();
             };
+          }
+        } else {
+          ws.current?.close();
+          if (savedMessages)
+            setMessages(JSON.parse(savedMessages));
         }
     }, [interview_id]);
 
+    const handleComplete = async () => {
+      const response = await axios.post(`http://localhost:8000/api/code/complete/`, {
+        interview_id: interview_id});
+      console.log(response.data);
+    }
+
+
 
       const sendMessageViaWebSocket = (userMessage: string) => {
+        const language = localStorage.getItem('language');
+        const code = localStorage.getItem(`code_${language}`);
+        const showCode = localStorage.getItem('showCode');
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-          ws.current.send(JSON.stringify({"answer": userMessage}));
+          if(code && showCode === 'true'){
+            ws.current.send(JSON.stringify({"answer": userMessage, "remaining_time": remainingTime, "code": code}));
+            console.log({"answer": userMessage, "remaining_time": remainingTime, "code": code})
+          } else {
+            ws.current.send(JSON.stringify({"answer": userMessage, "remaining_time": remainingTime}));
+            console.log({"answer": userMessage, "remaining_time": remainingTime})
+          }
         } else {
           console.error('WebSocket is not open');
         }
@@ -95,6 +140,7 @@ export default function ChatPanel({interview_id}: {interview_id: string}) {
       };
   return (
       <ScrollArea className="relative flex flex-col justify-between w-full h-full bg-white dark:bg-neutral-900 rounded-lg shadow">
+        <button onClick={handleComplete}>complete</button>
           <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar pt-8 pb-10 ">
               {messages.map(message => (
                   <MessageBubble
@@ -120,7 +166,7 @@ export default function ChatPanel({interview_id}: {interview_id: string}) {
               <div ref={chatEndRef} />
           </div>
           <div className=" w-full">
-              <ChatInput onSendMessage={handleMessageInput} isLoading={isLoading} />
+              <ChatInput onSendMessage={handleMessageInput} isLoading={isLoading} isEnd={remainingTime===0} />
           </div>
       </ScrollArea>
   )

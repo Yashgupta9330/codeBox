@@ -5,9 +5,10 @@ import { ReactMediaRecorder } from 'react-media-recorder';
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   isLoading: boolean;
+  isEnd: boolean;
 }
 
-export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
+export function ChatInput({ onSendMessage, isLoading, isEnd }: ChatInputProps) {
   const [message, setMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -40,16 +41,17 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
               placeholder="Type your message..."
               className="flex-1 max-h-32 p-2 bg-transparent border-none outline-none resize-none text-white placeholder-white/50"
               rows={1}
+              maxLength={500}
+              disabled={isLoading || isEnd}
             />
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={status === 'recording' ? stopRecording : startRecording}
-                className={`p-2 rounded-full transition-colors ${
-                  status === 'recording'
+                className={`p-2 rounded-full transition-colors ${status === 'recording'
                     ? 'bg-red-600 animate-pulse'
                     : 'bg-purple-600 hover:bg-purple-700'
-                }`}
+                  }`}
               >
                 <Mic size={20} />
               </button>
@@ -61,6 +63,9 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
                 <Send size={20} />
               </button>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-4 text-gray-500 dark:text-gray-400 text-xs mt-4">
+            {message.length}/500
           </div>
         </form>
       )}

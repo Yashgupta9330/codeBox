@@ -6,7 +6,7 @@ from apps.problems.models import Problem
 from apps.user.models import User  
 from .models import InterviewSession
 from .serializers import QuestionSerializer,InterviewSessionSerializer,CodeSerializer
-from .utils.execute_ai_tool import execute_ai_tool
+from .utils.execute_ai_tool import execute_ai_tool, generateAIFeedback
 import logging
 logger = logging.getLogger(__name__)
 class QuestionList(APIView):
@@ -88,3 +88,33 @@ class GetInterviewDetails(APIView):
         serializer = InterviewSessionSerializer(interview)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class CompleteInterview(APIView):
+    def post(self, request):
+        interview_id = request.data.get('interview_id')
+        interview = InterviewSession.objects.get(id=interview_id)
+
+        if not interview:
+            return Response({"error": "No interview session found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        interview.complete_interview()
+        return Response({"message": "Interview completed!"}, status=status.HTTP_200_OK)
+
+class GenerateFeedback(APIView):
+    def post(self, request):
+        interview_id = request.data.get('interview_id')
+
+        interview = InterviewSession.objects.get(id=interview_id)
+
+        if not interview:
+            return Response({"error": "No interview session found."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if interview.is_completed:
+            return Response({"message": "Feedback saved!", "feedback": interview.feedback}, status=status.HTTP_200_OK)
+        
+        feedback = generateAIFeedback(interview.chat_history, interview.ai_notes)
+
+        interview.feedback = feedback
+        interview.save()
+        return Response({"message": "Feedback saved!", "feedback": feedback}, status=status.HTTP_200_OK)

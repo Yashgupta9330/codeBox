@@ -40,6 +40,7 @@ export default function CodeToolbar({ currentLanguage, setCurrentLanguage, edito
           <AlignLeft size={20} />
         </button>
       }
+      {/* <button></button> */}
     </div>
   )
 }

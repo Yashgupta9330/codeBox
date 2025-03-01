@@ -76,7 +76,15 @@ class InterviewConsumer(AsyncWebsocketConsumer):
                 logger.info(f"Candidate's response: {candidate_response}")
                 self.chat_history += f"\nCandidate: {candidate_response}"
                 self.message_list.append({"is_ai": False, "message": candidate_response})
+                remainingTime = None
+                code = None
                 
+                if 'remaining_time' in data:
+                    remainingTime = data['remaining_time']
+
+                if 'code' in data:
+                    code = data['code']
+
                 # Handle first message to AI with username and question description
                 if not self.initial_prompt_sent:
                     username = self.scope['username']
@@ -96,7 +104,9 @@ class InterviewConsumer(AsyncWebsocketConsumer):
                     ai_message, self.ai_notes = await sync_to_async(generate_ai_message)(
                         chat_history=self.chat_history,
                         ai_notes=self.ai_notes,
-                        is_initial=False
+                        is_initial=False,
+                        remainingTime=remainingTime,
+                        code=code
                     )
                 
                 self.chat_history += f"\nAI: {ai_message}"
