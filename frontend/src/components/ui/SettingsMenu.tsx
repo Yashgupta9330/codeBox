@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { Settings, InfoIcon } from "lucide-react"
@@ -60,9 +58,9 @@ export function SettingsMenu() {
                 <span className="sr-only">Settings</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full p-4 min-w-80" align="end" side="right">
+            <DropdownMenuContent className="w-full p-4 min-w-80 bg-white dark:bg-zinc-900 text-black dark:text-white" align="end" side="right">
               <DropdownMenuLabel className="text-lg font-medium">Settings</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator className="border-gray-200 dark:border-gray-700" />
 
               <DropdownMenuGroup className="p-2 space-y-4">
                 {/* Key Bindings */}
@@ -73,7 +71,7 @@ export function SettingsMenu() {
                       <TooltipTrigger asChild>
                         <InfoIcon size={16} className="text-muted-foreground cursor-pointer" />
                       </TooltipTrigger>
-                      <TooltipContent side="top">
+                      <TooltipContent side="top" className="bg-white dark:bg-zinc-900 text-black dark:text-white">
                         <p>Choose your preferred keyboard shortcuts style</p>
                       </TooltipContent>
                     </Tooltip>
@@ -84,7 +82,7 @@ export function SettingsMenu() {
                     onValueChange={(value) => {
                       if (value) updateSettings("keyBindings", value as "standard" | "vim" | "emacs")
                     }}
-                    className="bg-zinc-900 rounded-md w-full"
+                    className="bg-gray-100 dark:bg-zinc-900 rounded-md w-full"
                   >
                     <ToggleGroupItem
                       value="standard"
@@ -115,7 +113,7 @@ export function SettingsMenu() {
                       <TooltipTrigger asChild>
                         <InfoIcon size={16} className="text-muted-foreground cursor-pointer" />
                       </TooltipTrigger>
-                      <TooltipContent side="top">
+                      <TooltipContent side="top" className="bg-white dark:bg-zinc-900 text-black dark:text-white">
                         <p>Adjust the size of the editor text</p>
                       </TooltipContent>
                     </Tooltip>
@@ -124,12 +122,12 @@ export function SettingsMenu() {
                     value={settings.fontSize.toString()}
                     onValueChange={(value) => updateSettings("fontSize", Number.parseInt(value))}
                   >
-                    <SelectTrigger className="w-full bg-zinc-900 border-zinc-700">
+                    <SelectTrigger className="w-full bg-gray-100 dark:bg-zinc-900 border-gray-300 dark:border-zinc-700">
                       <SelectValue placeholder="Font size" />
                     </SelectTrigger>
-                    <SelectContent className="bg-zinc-800 border-zinc-700">
+                    <SelectContent className="bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700">
                       {fontSizeOptions.map((size) => (
-                        <SelectItem key={size} value={size.toString()}>
+                        <SelectItem key={size} value={size.toString()} className="text-black dark:text-white">
                           {size} px
                         </SelectItem>
                       ))}
@@ -145,7 +143,7 @@ export function SettingsMenu() {
                       <TooltipTrigger asChild>
                         <InfoIcon size={16} className="text-muted-foreground cursor-pointer" />
                       </TooltipTrigger>
-                      <TooltipContent side="top">
+                      <TooltipContent side="top" className="bg-white dark:bg-zinc-900 text-black dark:text-white">
                         <p>Set the number of spaces for each tab</p>
                       </TooltipContent>
                     </Tooltip>
@@ -154,12 +152,12 @@ export function SettingsMenu() {
                     value={settings.tabSize.toString()}
                     onValueChange={(value) => updateSettings("tabSize", Number.parseInt(value))}
                   >
-                    <SelectTrigger className="w-full bg-zinc-900 border-zinc-700">
+                    <SelectTrigger className="w-full bg-gray-100 dark:bg-zinc-900 border-gray-300 dark:border-zinc-700">
                       <SelectValue placeholder="Tab size" />
                     </SelectTrigger>
-                    <SelectContent className="bg-zinc-800 border-zinc-700">
+                    <SelectContent className="bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700">
                       {tabSizeOptions.map((size) => (
-                        <SelectItem key={size} value={size.toString()}>
+                        <SelectItem key={size} value={size.toString()} className="text-black dark:text-white">
                           {size}
                         </SelectItem>
                       ))}
@@ -170,14 +168,14 @@ export function SettingsMenu() {
                 {!isInterviewPage && (
                   <div className="flex items-center justify-between pt-2">
                     <div className="flex items-center gap-2">
-                      <Label htmlFor="strict-mode" className="text-base font-medium">
+                      <Label htmlFor="strict-mode" className="text-base font-medium text-blue-500">
                         Strict Mode
                       </Label>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <InfoIcon size={16} className="text-muted-foreground cursor-pointer" />
                         </TooltipTrigger>
-                        <TooltipContent side="top">
+                        <TooltipContent side="top" className="bg-white dark:bg-zinc-900 text-black dark:text-white">
                           <p>
                             Strict mode enables a focused coding environment eliminating all the clutter from the
                             workspace.
@@ -197,7 +195,7 @@ export function SettingsMenu() {
             </DropdownMenuContent>
           </DropdownMenu>
         </TooltipTrigger>
-        <TooltipContent side="right">
+        <TooltipContent side="right" className="bg-white dark:bg-zinc-900 text-black dark:text-white">
           <p>Editor Settings</p>
         </TooltipContent>
       </Tooltip>

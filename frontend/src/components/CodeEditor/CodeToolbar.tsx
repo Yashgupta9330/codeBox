@@ -35,11 +35,11 @@ export default function CodeToolbar({ currentLanguage, setCurrentLanguage, edito
         currentLanguage={currentLanguage} 
         setCurrentLanguage={setCurrentLanguage}
       />
-      {
+      {/* {
         isFormatterAvailable && <button onClick={handleFormatCode} className='bg-gray-200 dark:bg-neutral-800/50 px-2 py-1 rounded-md'>
           <AlignLeft size={20} />
         </button>
-      }
+      } */}
       {/* <button></button> */}
     </div>
   )

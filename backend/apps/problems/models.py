@@ -32,6 +32,8 @@ class Problem(models.Model):
         symmetrical=False,
         related_name='related_to'
     )
+
+    solution = MarkdownxField(blank=True, null=True)
     
     topicTags = ArrayField(models.CharField(max_length=50), blank=True, default=list)
     hints = ArrayField(models.TextField(), blank=True, default=list)

@@ -7,7 +7,7 @@ import ProblemComponent from '../ProblemLayout';
 import { useParams } from 'react-router-dom';
 import { useStrictMode } from '@/context/StrictModeContext';
 
-type problemSet = {
+export type problemSet = {
   title: string;
   difficulty: "E" | "M" | "H";
   topicTags: string[];
@@ -22,6 +22,7 @@ type problemSet = {
   acceptanceRate: number;
   likes: number;
   dislikes: number;
+  solution?: string;
 }
 
 export default function Description() {
