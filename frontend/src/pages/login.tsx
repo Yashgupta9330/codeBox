@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginForm } from "@/components/login-from";
+import { API_URL } from "@/lib/credentials";
 
 const GoogleAuth = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,8 @@ const GoogleAuth = () => {
   };
 
   const loginWithGoogle = () => {
-    window.location.href = "http://localhost:8000/auth/google/login"; 
+    const url = `http://localhost:8000/auth/google/login`;
+    window.location.href = `${url}`;
   };
 
   const handleSignIn = () => {

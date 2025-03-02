@@ -4,6 +4,11 @@ import CodeEditor from './CodeEditor/CodeEditor';
 import TestCases from './Testcases/TestCases';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './ui/resizable';
 import { TestCase } from '@/pages/Interview/types';
+import { API_URL } from '@/lib/credentials';
+import { useTabs } from '@/context/tabs-context';
+import { Atom } from 'lucide-react';
+import Results from './Tabs/Results';
+import TestCaseResponse from './Tabs/Results';
 
 
 interface CodePanelProps {
@@ -17,11 +22,14 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
   const problemId = localStorage.getItem('problemId'); 
   const [submitState, setSubmitState] = useState<"initial" | "loading" | "success">("initial");
 
+  const [response, setResponse] = useState<any>();
+  const { state, visibleTabs, activateTab, addTab } = useTabs()
+
   useEffect(() => {
     localStorage.setItem('showCode', 'true');
     const fetchTestCases = async () => {
       try {
-        const sampleResponse = await axios.get(`http://localhost:8000/api/testcases/${problemId}/`);
+        const sampleResponse = await axios.get(`${API_URL}/testcases/${problemId}/`);
         console.log("sample response", sampleResponse.data)
         setDefaultTestCases(sampleResponse.data.testcases);
         setTestCases(sampleResponse.data.testcases);
@@ -35,6 +43,17 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
     }
   }, [problemId]);
 
+  const handleAddTab = (response) => {
+    const newTabId = `result-${state.tabs.length + 1}`
+    addTab({
+      id: newTabId,
+      name: `Result ${state.tabs.length + 1}`,
+      isHidden: false,
+      icon: <Atom />,
+      content: <TestCaseResponse results={response} />,
+    })
+  }
+
   const onRun = async () => {
     try {
       setSubmitState("loading");
@@ -43,13 +62,15 @@ export default function CodePanel({ interview_id, isInterview=false }: CodePanel
       console.log("testCases",testCases)
       console.log("language",language)
       console.log("code",code)
-      const response = await axios.post(`http://localhost:8000/api/submissions/submit/`, {
+      const response = await axios.post(`${API_URL}/submissions/submit/`, {
         code,
         test_cases: testCases, 
         language: language?.toUpperCase()
       });
       setSubmitState("success");
-      return response.data;
+      console.log("response", response.data);
+      setResponse(response.data);
+      handleAddTab(response.data);
     } catch (error) {
       console.error('Error submitting code:', error);
       setSubmitState("initial");

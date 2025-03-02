@@ -95,12 +95,12 @@ export default function PerformAction({ state = 'initial', onRun, onSubmit, setS
               >
                 <div className="text-white text-[13px]  leading-tight">Run</div>
               </button>
-              <button 
+              {/* <button 
                 onClick={onSubmit}
                 className="h-7 px-3 bg-gradient-to-b from-[#7c5aff] to-[#6c47ff] rounded-[99px] shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.16),0px_1px_2px_0px_rgba(0,0,0,0.20)] justify-center items-center inline-flex overflow-hidden cursor-pointer hover:from-[#8f71ff] hover:to-[#7c5aff] active:from-[#6c47ff] active:to-[#5835ff] transition-all duration-200"
               >
                 <div className="text-white text-[13px] font-medium font-['Geist'] leading-tight">Submit</div>
-              </button>
+              </button> */}
             </motion.div>
           )}
         </AnimatePresence>

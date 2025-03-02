@@ -57,17 +57,18 @@ function Home() {
               </div>
               <pre className="text-primary">
                   <code>
-                    {`function quickSort(arr: number[]): number[] {
-                      if (arr.length <= 1) return arr;
-                      
-                      const pivot = arr[0];
-                      const left = arr.filter((x, i) => 
-                        i > 0 && x < pivot
-                      );
-                      const right = arr.filter(x => x >= pivot);
-                      
-                      return [...quickSort(left), pivot, ...quickSort(right)];
-                    }`}
+                    {`function CodeboxAI(editor: CodeEditor): CodeAssistant {
+  if (!editor.isOpen()) return new CodeAssistant("Open an editor to begin!");
+
+  const secureCompiler = new SecureCompiler(["C++", "Python", "Java", "JS", "Rust"]);
+  const aiHelper = new AIHelper({ interviewMode: true, codeSuggestions: true });
+
+  editor.on("run", (code) => secureCompiler.execute(code));
+  editor.on("askAI", (query) => aiHelper.respond(query));
+
+  return { compile: secureCompiler.execute, assist: aiHelper.respond };
+  }
+                      `}
                   </code>
               </pre>
               {/* Animated Cursor */}

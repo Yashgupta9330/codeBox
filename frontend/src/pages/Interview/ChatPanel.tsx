@@ -5,6 +5,7 @@ import { Message } from "./types";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useStrictMode } from "@/context/StrictModeContext";
 import axios from "axios";
+import { API_URL } from "@/lib/credentials";
 
 export default function ChatPanel({interview_id, remainingTime, isComplete}: {interview_id: string,remainingTime: number, isComplete:boolean}) {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -17,12 +18,12 @@ export default function ChatPanel({interview_id, remainingTime, isComplete}: {in
 
       useEffect(() => {
         const completeInterview = async () => {
-          const response = await axios.post(`http://localhost:8000/api/code/complete/`, {
+          const response = await axios.post(`${API_URL}/code/complete/`, {
             interview_id: interview_id});
           console.log(response.data);
         }
         const generateFeedback = async () => {
-          const response = await axios.post(`http://localhost:8000/api/code/feedback/`, {
+          const response = await axios.post(`${API_URL}/code/feedback/`, {
             interview_id: interview_id});
           console.log(response.data);
         }
@@ -85,7 +86,7 @@ export default function ChatPanel({interview_id, remainingTime, isComplete}: {in
     }, [interview_id]);
 
     const handleComplete = async () => {
-      const response = await axios.post(`http://localhost:8000/api/code/complete/`, {
+      const response = await axios.post(`${API_URL}/api/code/complete/`, {
         interview_id: interview_id});
       console.log(response.data);
     }

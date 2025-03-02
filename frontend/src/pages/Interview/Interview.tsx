@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom"
 import RightPanel from "./RightPanel"
 import { useLayoutEffect, useState } from "react"
 import axios from "axios"
+import { API_URL } from "@/lib/credentials"
 
 export default function Interview() {
   const { id } = useParams<{ id: string }>()
@@ -15,7 +16,7 @@ export default function Interview() {
   useLayoutEffect(() => {
     const fetchInterviewDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/get-interview-details/${id}/`)
+        const response = await axios.get(`${API_URL}/get-interview-details/${id}/`)
         const interview = response.data
         const startTime = new Date(interview.start_time).getTime()
         const currentTime = new Date().getTime()
